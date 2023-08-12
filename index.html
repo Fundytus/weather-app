@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&family=Roboto:ital,wght@0,500;1,900&family=Work+Sans:wght@200;300&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-primary fw-bold">Weather Forecast</h1>
+        <input type="text" class="form-control" placeholder="Search city here" id="search-input">
+        <button type="button" class="btn btn-primary searchCityBtn">Search</button>
+        <button type="button" class="btn btn-success searchCurrentBtn">Current</button>
+        <div class="currentWeatherBlock border border-primary-subtle rounded d-flex justify-content-between mb-5">
+            <div class="mainInfo">
+                <h3 class="fw-bold">Current Weather</h3>
+                <p class="currentDate">
+                </p>
+                <h2 class="text-primary fw-bolder mt-5" id="searchCity">Paris</h2>
+                <div class="d-flex">
+                    <img src="./images/hot_sun_weather.png" alt="" class="sunImg me-4">
+                    <h2 class="mt-5 me-1" id="currentTemp">36&#176;</h2>
+                    <!-- <h6 class="mt-5" id="celsius">&#176;C</h6> -->
+                    <!-- <h6 class="mt-5" id="fahrenheit">| &#176;F </h6> -->
+                </div>
+                <p class="ms-4 fs-6 description">clear sky</p>
+            </div>
+            <div class="aditionalInfo align-items-center">
+                <p class="text-center fs-5 mb-4 feelsLike">Feels like 34&#176;</p>
+                <div class="d-flex justify-content-around">
+                    <div class="highParameters">
+                        <div class="mb-3"><span class="highTemp">37&#176;</span>
+                            <br />
+                            <span>High</span></div>
+                        <div class="mb-3"><span class="humidity">80%</span>
+                            <br />
+                            <span>Humidity</span></div>
+                        <!-- <div><span>05:27</span>
+                            <br />
+                            <span>Sunrise</span></div>-->
+                    </div>
+                    <div class="lowParameters">
+                        <div class="mb-3"><span class="lowTemp">34&#176;</span>
+                            <br />
+                            <span>Low</span></div>
+                        <div class="mb-3"><span class="windSpeed">0m/s</span>
+                            <br />
+                            <span>Wind</span></div>
+                        <!-- <div><span>08:20</span>
+                            <br />
+                            <span>Sunset</span></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="extendedForecast border border-primary-subtle rounded mb-5">
+            <h3 class="fw-bold mt-5 mb-4">Extended Forecast</h3>
+            <div class="card-group row-cols-1 row-cols-md-2 g-4">
+                <div class="card text-center m-3 rounded ms-5">
+                    <h4 class="mt-4  fw-bolder">Sat</h4>
+                    <img src="./images/hot_sun_weather.png" class="card-img-top m-auto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Clear</h5>
+                        <p class="card-text">36&#176;/27&#176;</p>
+                    </div>
+                </div>
+                <div class="card text-center m-3 rounded border">
+                    <h4 class="mt-4  fw-bolder">Sun</h4>
+                    <img src="./images/cloud_rain_weather.png" class="card-img-top m-auto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Rain</h5>
+                        <p class="card-text">30&#176;/24&#176;</p>
+                    </div>
+                </div>
+                <div class="card text-center m-3 rounded border">
+                    <h4 class="mt-4  fw-bolder">Mon</h4>
+                    <img src="./images/cloud_heavy rain_rain_weather.png" class="card-img-top m-auto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Rain</h5>
+                        <p class="card-text">28&#176;/22&#176;</p>
+                    </div>
+                </div>
+                <div class="card text-center m-3 rounded border">
+                    <h4 class="mt-4  fw-bolder">Tue</h4>
+                    <img src="./images/cloud_cloudy_sun_sunny_weather.png" class="card-img-top m-auto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Cloudy</h5>
+                        <p class="card-text">29&#176;/25&#176;</p>
+                    </div>
+                </div>
+                <div class="card text-center m-3 rounded border me-5">
+                    <h4 class="mt-4  fw-bolder">Wed</h4>
+                    <img src="./images/cloud_sun_sunny_weather.png" class="card-img-top m-auto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Cloudy</h5>
+                        <p class="card-text">32&#176;/28&#176;</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./src/index.js"></script>
+</body>
+
+</html>

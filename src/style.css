@@ -1,0 +1,45 @@
+.container {
+    font-family: 'DM Sans',
+        sans-serif;
+    font-family: 'Roboto',
+        sans-serif;
+    font-family: 'Work Sans',
+        sans-serif;
+}
+
+.container h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.container .form-control {
+    width: 40%;
+    display: inline-block;
+    margin-bottom: 70px;
+}
+
+.searchImg {
+    width: 20px;
+}
+
+.sunImg {
+    width: 30%;
+    margin-top: 5px;
+}
+
+.mainInfo {
+    margin: 50px 0 50px 100px;
+}
+
+.aditionalInfo {
+    width: 30%;
+    margin: 100px 100px 0 0;
+}
+
+.card img {
+    width: 40%;
+}
+
+.extendedForecast h3 {
+    margin-left: 100px;
+}
