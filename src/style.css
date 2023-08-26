@@ -43,3 +43,12 @@
 .extendedForecast h3 {
     margin-left: 100px;
 }
+
+.active {
+    color: #212121;
+    cursor: default;
+}
+
+.active:hover {
+    text-decoration: none;
+}

@@ -19,31 +19,34 @@
 <body>
     <div class="container">
         <h1 class="text-primary fw-bold">Weather Forecast</h1>
-        <input type="text" class="form-control" placeholder="Search city here" id="search-input">
-        <button type="button" class="btn btn-primary searchCityBtn">Search</button>
-        <button type="button" class="btn btn-success searchCurrentBtn">Current</button>
+        <form id="search-form" class="mb-3">
+            <input type="search" class="form-control" placeholder="Search city here" id="search-input"
+                autocomplete="off">
+            <button class="btn btn-primary searchCityBtn" type="submit" value="Search">Search</button>
+            <button type="button" class="btn btn-success searchCurrentBtn">Current</button></form>
         <div class="currentWeatherBlock border border-primary-subtle rounded d-flex justify-content-between mb-5">
             <div class="mainInfo">
                 <h3 class="fw-bold">Current Weather</h3>
                 <p class="currentDate">
                 </p>
-                <h2 class="text-primary fw-bolder mt-5" id="searchCity">Paris</h2>
+                <h2 class="text-primary fw-bolder mt-5" id="searchCity"></h2>
                 <div class="d-flex">
                     <img src="./images/hot_sun_weather.png" alt="" class="sunImg me-4">
-                    <h2 class="mt-5 me-1" id="currentTemp">36&#176;</h2>
-                    <!-- <h6 class="mt-5" id="celsius">&#176;C</h6> -->
-                    <!-- <h6 class="mt-5" id="fahrenheit">| &#176;F </h6> -->
+                    <h2 class="mt-5 me-1" id="currentTemp"></h2>
+                    <a href="#" id="celsius" class="active link-underline-light mt-5 fs-6">°C </a> <span class="mt-5"> |
+                    </span>
+                    <a href="#" id="fahrenheit" class="link-underline-light mt-5 fs-6">°F</a>
                 </div>
-                <p class="ms-4 fs-6 description">clear sky</p>
+                <p class="ms-4 fs-6 description"></p>
             </div>
             <div class="aditionalInfo align-items-center">
-                <p class="text-center fs-5 mb-4 feelsLike">Feels like 34&#176;</p>
+                <p class="text-center fs-5 mb-4 feelsLike">Feels like </p>
                 <div class="d-flex justify-content-around">
                     <div class="highParameters">
-                        <div class="mb-3"><span class="highTemp">37&#176;</span>
+                        <div class="mb-3"><span class="highTemp"></span>
                             <br />
                             <span>High</span></div>
-                        <div class="mb-3"><span class="humidity">80%</span>
+                        <div class="mb-3"><span class="humidity"></span>
                             <br />
                             <span>Humidity</span></div>
                         <!-- <div><span>05:27</span>
@@ -51,10 +54,10 @@
                             <span>Sunrise</span></div>-->
                     </div>
                     <div class="lowParameters">
-                        <div class="mb-3"><span class="lowTemp">34&#176;</span>
+                        <div class="mb-3"><span class="lowTemp"></span>
                             <br />
                             <span>Low</span></div>
-                        <div class="mb-3"><span class="windSpeed">0m/s</span>
+                        <div class="mb-3"><span class="windSpeed"></span>
                             <br />
                             <span>Wind</span></div>
                         <!-- <div><span>08:20</span>
@@ -111,10 +114,10 @@
         </div>
     </div>
     <footer class="mb-4 ms-5">
-       <h6> <a href="https://github.com/IvannaHaiovska/weather-app"
-               class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover ms-5">Link
-               to
-               GitHub repository</a></h6>
+        <h6> <a href="https://github.com/IvannaHaiovska/weather-app"
+                class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover ms-5">Link
+                to
+                GitHub repository</a></h6>
     </footer>
     <script src="./src/index.js"></script>
 </body>

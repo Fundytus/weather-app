@@ -56,28 +56,9 @@ let searchInput = document.querySelector("#search-input");
 let searchBtn = document.querySelector(".searchCityBtn");
 let searchCity = document.querySelector("#searchCity");
 
-// function showCity(event) {
-//     event.preventDefault();
-//     searchCity.innerHTML = searchInput.value;
-// }
 
-// Displaying a fake temperature
-// let celsiusBtn = document.querySelector('#celsius');
-// let fahrenheitBtn = document.querySelector('#fahrenheit');
+let temperature = document.querySelector("#currentTemp");
 
-
-// function showTempFahrenheit(event) {
-//     event.preventDefault();
-//     console.log(temperature);
-//     temperature.innerHTML = Math.round((temperature.innerHTML * 9 / 5) + 32);
-// }
-
-// function showTempCelsius(event) {
-//     event.preventDefault()
-//     temperature.innerHTML = Math.round((temperature.innerHTML - 32) * 5 / 9);
-// }
-// fahrenheitBtn.addEventListener('click', showTempFahrenheit);
-// celsiusBtn.addEventListener('click', showTempCelsius)
 
 // display current position
 let currentPositionBtn = document.querySelector(".searchCurrentBtn");
@@ -85,7 +66,6 @@ let description = document.querySelector(".description");
 
 // display all info about weather
 function showWeather(response) {
-    console.log(response.data);
     let dataRespons = response.data;
     let temperature = document.querySelector("#currentTemp");
     let minTemp = document.querySelector(".lowTemp");
@@ -98,15 +78,17 @@ function showWeather(response) {
     feelsLikeTemp.innerHTML = `Feels like  ${Math.round(
     dataRespons.main.feels_like
   )}&#176;`;
+    let celsiusTemperature = response.data.main.temp;
     maxTemp.innerHTML = `${Math.round(dataRespons.main.temp_max)}&#176;`;
     minTemp.innerHTML = `${Math.round(dataRespons.main.temp_min)}&#176;`;
     humidity.innerHTML = `${dataRespons.main.humidity}%`;
-    temperature.innerHTML = `${Math.round(dataRespons.main.temp)}&#176;`;
+    temperature.innerHTML = `${Math.round(celsiusTemperature)}`;
     windSpeed.innerHTML = `${Math.round(dataRespons.wind.speed)}m/s`;
     displayPicture();
 }
 
 let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+
 // weather in current position
 function retrievePosition(position) {
     let lat = position.coords.latitude;
@@ -121,14 +103,56 @@ function displayCurrentWeather(event) {
 }
 currentPositionBtn.addEventListener("click", displayCurrentWeather);
 
+
 // weather in search City
-function showSearchCity() {
-    let city = searchInput.value;
+function showSearchCity(city) {
     let urlApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(urlApi).then(showWeather);
+
+}
+
+function handleSubmit(event) {
+    event.preventDefault();
+    let city = searchInput.value;
+    showSearchCity(city);
     searchInput.value = "";
 }
-searchBtn.addEventListener("click", showSearchCity);
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+searchBtn.addEventListener("click", handleSubmit);
+
+let temp = document.querySelector("#currentTemp");
+
+// toggle from Fahrenheit to Celsius
+function showTempFahrenheit(event) {
+    event.preventDefault();
+
+    let temperatureElement = document.querySelector("#currentTemp");
+    celsiusTemperature = temperatureElement.innerHTML;
+    if (!fahrenheit.classList.contains('active')) {
+        let fahrenheiTemperature = (celsiusTemperature * 9) / 5 + 32;
+        temperatureElement.innerHTML = Math.round(fahrenheiTemperature);
+    }
+    fahrenheit.classList.add("active");
+    celsius.classList.remove("active");
+}
+
+// toggle from Celsius to Fahrenheit
+function showTempCelsius(event) {
+    event.preventDefault();
+    celsius.classList.add("active");
+    fahrenheit.classList.remove("active");
+    let temperatureElement = document.querySelector("#currentTemp");
+    temperatureElement.innerHTML = Math.round(celsiusTemperature);
+}
+
+let celsiusTemperature = null;
+
+let fahrenheit = document.querySelector("#fahrenheit");
+fahrenheit.addEventListener("click", showTempFahrenheit);
+
+let celsius = document.querySelector("#celsius");
+celsius.addEventListener("click", showTempCelsius);
 
 // changing the image depending on the weather
 function displayPicture() {
@@ -146,3 +170,5 @@ function displayPicture() {
         sunImg.setAttribute("src", "./images/cloud_rain_weather.png");
     }
 }
+
+showSearchCity("Paris");
