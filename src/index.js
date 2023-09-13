@@ -1,55 +1,73 @@
 // displaying the current date and time
-let now = new Date();
-let currentDate = document.querySelector(".currentDate");
-let day = now.getDay();
-let month = now.getMonth();
-let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-];
-day = days[now.getDay()];
-let months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-];
-month = months[now.getMonth()];
-let dayNumber = now.getDate();
-if (dayNumber === 1) {
-    dayNumber = 1 + "st";
-} else if (dayNumber === 2) {
-    dayNumber = 2 + "nd";
-} else if (dayNumber === 3) {
-    dayNumber = 2 + "rd";
-} else {
-    dayNumber = dayNumber + "th";
+function formatDate() {
+    let now = new Date();
+    let currentDate = document.querySelector(".currentDate");
+    let day = now.getDay();
+    let month = now.getMonth();
+    let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+    day = days[now.getDay()];
+    let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+    month = months[now.getMonth()];
+    let dayNumber = now.getDate();
+    if (dayNumber === 1) {
+        dayNumber = 1 + "st";
+    } else if (dayNumber === 2) {
+        dayNumber = 2 + "nd";
+    } else if (dayNumber === 3) {
+        dayNumber = 2 + "rd";
+    } else {
+        dayNumber = dayNumber + "th";
+    }
+
+    let hours = now.getHours()
+    if (hours < 10) {
+        hours = `0${hours}`;
+    }
+
+    let minutes = now.getMinutes();
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+
+    currentDate.innerHTML = `${day}, ${dayNumber} ${month} ${now.getFullYear()}, ${hours}:${minutes}`;
 }
 
-let hours = now.getHours()
-if (hours < 10) {
-    hours = `0${hours}`;
-}
+function formatDay(timestamp) {
+    let now = new Date(timestamp * 1000);
+    let day = now.getDay();
+    let days = [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+    ];
 
-let minutes = now.getMinutes();
-if (minutes < 10) {
-    minutes = `0${minutes}`;
+    return days[day];
 }
-
-currentDate.innerHTML = `${day}, ${dayNumber} ${month} ${now.getFullYear()}, ${hours}:${minutes}`;
 
 // Adding a search engine
 let searchInput = document.querySelector("#search-input");
@@ -66,6 +84,7 @@ let description = document.querySelector(".description");
 
 // display all info about weather
 function showWeather(response) {
+    formatDate()
     let dataRespons = response.data;
     let temperature = document.querySelector("#currentTemp");
     let minTemp = document.querySelector(".lowTemp");
@@ -85,6 +104,8 @@ function showWeather(response) {
     temperature.innerHTML = `${Math.round(celsiusTemperature)}`;
     windSpeed.innerHTML = `${Math.round(dataRespons.wind.speed)}m/s`;
     displayPicture();
+
+    getForecast(response.data.coord);
 }
 
 let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
@@ -123,6 +144,36 @@ searchBtn.addEventListener("click", handleSubmit);
 
 let temp = document.querySelector("#currentTemp");
 
+// Display week forecast
+function displayForecast(response) {
+    let forecast = response.data.daily;
+    let forecastElement = document.querySelector(".extendedForecast");
+    console.log(forecast);
+
+    let forecastHTML = `<h3 class = "fw-bold mt-5 mb-4" > Extended Forecast </h3><div class="card-group row-cols-1 row-cols-md-2 g-4">
+     `;
+    forecast.forEach(function (forecastDay, index) {
+        if (index < 6) {
+            forecastHTML +=
+                `<div class="card text-center m-3 rounded border ms-5">
+                <h4 class="mt-4  fw-bolder">${formatDay(forecastDay.dt)}</h4>
+                    <img src = "./images/${displayPictureForecast(forecastDay.weather[0].description)}" class = "card-img-top m-auto" alt = "..." >
+                    <div class="card-body">
+                        <h5 class="card-title">Clear</h5>
+                        <p class = "card-text"> ${Math.round(forecastDay.temp.max)}°/${Math.round(forecastDay.temp.min)}° </p>
+                    </div>
+                    </div>`;
+        }
+    });
+    forecastHTML = forecastHTML + `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+    // let apiKey = "cabdbda40038ba7d1165b953b1c7bd6c";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayForecast);
+}
 // toggle from Fahrenheit to Celsius
 function showTempFahrenheit(event) {
     event.preventDefault();
@@ -156,19 +207,39 @@ celsius.addEventListener("click", showTempCelsius);
 
 // changing the image depending on the weather
 function displayPicture() {
-    let sunImg = document.querySelector(".sunImg");
+     let sunImg = document.querySelector('.sunImg')
     if (description.innerHTML === "clear sky") {
         sunImg.setAttribute("src", "./images/hot_sun_weather.png");
+     
     } else if (description.innerHTML === "few clouds") {
         sunImg.setAttribute("src", "./images/cloud_sun_sunny_weather.png");
     } else if (
         description.innerHTML === "scattered clouds" ||
-        description.innerHTML === "broken clouds"
+        description.innerHTML === "broken clouds" ||
+        description.innerHTML === "overcast clouds"
     ) {
         sunImg.setAttribute("src", "./images/cloud_weather.png");
     } else {
         sunImg.setAttribute("src", "./images/cloud_rain_weather.png");
     }
 }
+
+function  displayPictureForecast(description) {
+  
+    if (description === "clear sky") {
+         return "hot_sun_weather.png"
+    } else if (description === "few clouds") {
+       return "cloud_sun_sunny_weather.png"
+    } else if (
+        description === "scattered clouds" ||
+        description === "broken clouds" ||
+        description=== "overcast clouds"
+    ) {
+        return "cloud_weather.png"
+    } else {
+      return "cloud_rain_weather.png"
+    }
+}
+
 
 showSearchCity("Paris");
